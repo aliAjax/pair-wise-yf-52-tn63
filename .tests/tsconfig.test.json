@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "types": ["node"],
+    "typeRoots": ["/workspace/node_modules/@types"],
+    "baseUrl": ".",
+    "paths": { "@angular/core": ["stubs/core.ts"] }
+  },
+  "include": ["tests/**/*.ts", "stubs/**/*.ts"]
+}

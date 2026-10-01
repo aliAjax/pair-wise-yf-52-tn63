@@ -12,11 +12,12 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { Subscription } from 'rxjs';
 import { activateVersion, addVersion, reorderLines, reviewCue, reviewLine, setOnline, toggleRehearsal } from './state/script.actions';
 import { ScriptState, ScriptVersion } from './state/script.reducer';
+import { HandoverPanelComponent } from './handover-panel.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatToolbarModule, MatButtonModule, MatCardModule, MatTabsModule, MatChipsModule, MatIconModule, TranslocoModule],
+  imports: [CommonModule, DragDropModule, MatToolbarModule, MatButtonModule, MatCardModule, MatTabsModule, MatChipsModule, MatIconModule, TranslocoModule, HandoverPanelComponent],
   template: `
     <mat-toolbar color="primary" class="topbar">
       <span>{{ 'title' | transloco }}</span>
@@ -78,6 +79,10 @@ import { ScriptState, ScriptVersion } from './state/script.reducer';
         </mat-card>
       </section>
 
+      <section class="handover-section">
+        <app-handover-panel></app-handover-panel>
+      </section>
+
       <aside class="offline" *ngIf="!(state$ | async)?.online">网络不可用，当前修改已写入本地缓存；恢复网络后需逐条确认合并。</aside>
     </main>
   `,
@@ -88,6 +93,7 @@ import { ScriptState, ScriptVersion } from './state/script.reducer';
     main.rehearsal { max-width: 860px; background: #111827; color: #f9fafb; margin-top: 0; }
     main.rehearsal .script, main.rehearsal .compare, main.rehearsal .summary { opacity: .92; }
     .summary { margin-bottom: 18px; }
+    .handover-section { margin-top: 28px; }
     .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
     .workspace { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 18px; }
     .line { cursor: grab; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid #e5e7eb; }
