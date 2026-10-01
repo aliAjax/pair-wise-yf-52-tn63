@@ -2,9 +2,12 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { provideTransloco, TranslocoLoader } from '@jsverse/transloco';
 import { of } from 'rxjs';
 import { scriptReducer } from './state/script.reducer';
+import { rehearsalReducer } from './state/rehearsal.reducer';
+import { RehearsalEffects } from './state/rehearsal.effects';
 
 class InlineTranslocoLoader implements TranslocoLoader {
   getTranslation() {
@@ -22,7 +25,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
     provideRouter([]),
-    provideStore({ script: scriptReducer }),
+    provideStore({ script: scriptReducer, rehearsal: rehearsalReducer }),
+    provideEffects([RehearsalEffects]),
     provideTransloco({
       config: { availableLangs: ['zh'], defaultLang: 'zh', fallbackLang: 'zh' },
       loader: InlineTranslocoLoader

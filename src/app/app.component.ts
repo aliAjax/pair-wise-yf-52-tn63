@@ -12,11 +12,12 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { Subscription } from 'rxjs';
 import { activateVersion, addVersion, reorderLines, reviewCue, reviewLine, setOnline, toggleRehearsal } from './state/script.actions';
 import { ScriptState, ScriptVersion } from './state/script.reducer';
+import { RehearsalComponent } from './rehearsal/rehearsal.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatToolbarModule, MatButtonModule, MatCardModule, MatTabsModule, MatChipsModule, MatIconModule, TranslocoModule],
+  imports: [CommonModule, DragDropModule, MatToolbarModule, MatButtonModule, MatCardModule, MatTabsModule, MatChipsModule, MatIconModule, TranslocoModule, RehearsalComponent],
   template: `
     <mat-toolbar color="primary" class="topbar">
       <span>{{ 'title' | transloco }}</span>
@@ -30,6 +31,8 @@ import { ScriptState, ScriptVersion } from './state/script.reducer';
     </mat-toolbar>
 
     <main [class.rehearsal]="(state$ | async)?.rehearsalMode">
+      <mat-tab-group class="main-tabs">
+        <mat-tab label="剧本版本与提示">
       <section class="summary">
         <mat-card>
           <mat-card-title>版本控制</mat-card-title>
@@ -79,6 +82,11 @@ import { ScriptState, ScriptVersion } from './state/script.reducer';
       </section>
 
       <aside class="offline" *ngIf="!(state$ | async)?.online">网络不可用，当前修改已写入本地缓存；恢复网络后需逐条确认合并。</aside>
+        </mat-tab>
+        <mat-tab label="排练与角色交接">
+          <app-rehearsal></app-rehearsal>
+        </mat-tab>
+      </mat-tab-group>
     </main>
   `,
   styles: [`
